@@ -10,6 +10,7 @@ namespace HalloBuilder
         public string Farbe { get; private set; } = string.Empty;
         public bool Metallschienen { get; private set; }
         public bool Kleiderstange { get; private set; }
+    
 
         public class Builder
         {
