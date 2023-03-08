@@ -1,5 +1,4 @@
-﻿using Mysqlx.Notice;
-using System.Data.Common;
+﻿using System.Data.Common;
 
 Console.WriteLine("Hello, World!");
 
@@ -7,7 +6,6 @@ var sqlServerConString = "Server=(localdb)\\mssqllocaldb;Database=master;Trusted
 
 //DbProviderFactory factory = Microsoft.Data.SqlClient.SqlClientFactory.Instance;
 DbProviderFactory factory = MySql.Data.MySqlClient.MySqlClientFactory.Instance;
-
 
 var con = factory.CreateConnection();
 con.ConnectionString = sqlServerConString;
