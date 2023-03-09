@@ -16,5 +16,13 @@ namespace ppedv.SchrottyCar.Services.CarService
         {
             return _repository.Query<Car>().Average(x => x.KW);
         }
+
+        public string? GetFastestCarColor()
+        {
+            return _repository.Query<Car>()
+                              .GroupBy(c => c.Color)
+                              .OrderByDescending(x => x.Average(y => y.KW))
+                              .FirstOrDefault()?.Key;
+        }
     }
 }
