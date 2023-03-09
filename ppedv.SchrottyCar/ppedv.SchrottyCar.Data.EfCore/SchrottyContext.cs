@@ -27,6 +27,9 @@ namespace ppedv.SchrottyCar.Data.EfCore
         {
             modelBuilder.Entity<Order>().HasOne(x => x.BillingAddress).WithMany(x => x.BillingOrders);
             modelBuilder.Entity<Order>().HasOne(x => x.DeliveryAddress).WithMany(x => x.DeliveryOrders);
+
+            modelBuilder.Entity<Order>().HasMany(x=>x.OrderItems).WithOne(x=>x.Order).OnDelete(DeleteBehavior.Cascade);
+            //modelBuilder.Entity<Car>().Ignore(x => x.KW);
         }
     }
 }
