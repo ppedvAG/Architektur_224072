@@ -3,13 +3,14 @@ using AutoFixture.Kernel;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using ppedv.SchrottyCar.Model;
+using ppedv.SchrottyCar.Model.DomainModel;
 using System.Reflection;
 
 namespace ppedv.SchrottyCar.Data.EfCore.Tests
 {
     public class SchrottyContextTests
     {
-        string conString = "Server=(localdb)\\mssqllocaldb;Database=SchrottyDb_Tests;Trusted_Connection=true;";
+        readonly string conString = "Server=(localdb)\\mssqllocaldb;Database=SchrottyDb_Tests;Trusted_Connection=true;";
 
         [Fact]
         [Trait("Category", "Integration")]
@@ -79,7 +80,7 @@ namespace ppedv.SchrottyCar.Data.EfCore.Tests
             using (var con = new SchrottyContext(conString))
             {
                 var loaded = con.Orders.Find(order.Id);
-                con.Orders.Remove(loaded);
+                con.Orders.Remove(loaded!);
                 con.SaveChanges();
             }
 

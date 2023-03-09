@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ppedv.SchrottyCar.Model;
+using ppedv.SchrottyCar.Model.DomainModel;
 
 namespace ppedv.SchrottyCar.Data.EfCore
 {

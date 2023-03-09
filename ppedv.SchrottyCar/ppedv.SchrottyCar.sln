@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33417.168
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ppedv.SchrottyCar.Model", "ppedv.SchrottyCar.Model\ppedv.SchrottyCar.Model.csproj", "{3C22BA63-D715-4110-A65E-95FE4E67D4C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ppedv.SchrottyCar.Model", "ppedv.SchrottyCar.Model\ppedv.SchrottyCar.Model.csproj", "{3C22BA63-D715-4110-A65E-95FE4E67D4C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ppedv.SchrottyCar.Data.EfCore", "ppedv.SchrottyCar.Data.EfCore\ppedv.SchrottyCar.Data.EfCore.csproj", "{7E166972-D1CC-42C4-B2A7-A9EC6E9C9B5C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ppedv.SchrottyCar.Data.EfCore", "ppedv.SchrottyCar.Data.EfCore\ppedv.SchrottyCar.Data.EfCore.csproj", "{7E166972-D1CC-42C4-B2A7-A9EC6E9C9B5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ppedv.SchrottyCar.Data.EfCore.Tests", "ppedv.SchrottyCar.Data.EfCore.Tests\ppedv.SchrottyCar.Data.EfCore.Tests.csproj", "{F1C76514-8685-4EF7-A5B9-46E5E008E642}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ppedv.SchrottyCar.Data.EfCore.Tests", "ppedv.SchrottyCar.Data.EfCore.Tests\ppedv.SchrottyCar.Data.EfCore.Tests.csproj", "{F1C76514-8685-4EF7-A5B9-46E5E008E642}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ppedv.SchrottyCar.Services.CarService", "ppedv.SchrottyCar.Services.CarService\ppedv.SchrottyCar.Services.CarService.csproj", "{B21E81B9-C438-4C4D-B186-EEC3E9C2209E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{F1C76514-8685-4EF7-A5B9-46E5E008E642}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1C76514-8685-4EF7-A5B9-46E5E008E642}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1C76514-8685-4EF7-A5B9-46E5E008E642}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B21E81B9-C438-4C4D-B186-EEC3E9C2209E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B21E81B9-C438-4C4D-B186-EEC3E9C2209E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B21E81B9-C438-4C4D-B186-EEC3E9C2209E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B21E81B9-C438-4C4D-B186-EEC3E9C2209E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,6 +1,6 @@
-﻿namespace ppedv.SchrottyCar.Model
+﻿namespace ppedv.SchrottyCar.Model.DomainModel
 {
-    public class Customer: Entity
+    public class Customer : Entity
     {
         public string CustomerId { get; set; } = string.Empty;
 

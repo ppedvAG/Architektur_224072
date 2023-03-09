@@ -1,4 +1,4 @@
-﻿namespace ppedv.SchrottyCar.Model
+﻿namespace ppedv.SchrottyCar.Model.DomainModel
 {
     public class Car : Entity
     {
