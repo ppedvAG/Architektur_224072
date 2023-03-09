@@ -1,9 +1,11 @@
-﻿using ppedv.SchrottyCar.Model.Contracts;
+﻿using ppedv.SchrottyCar.Data.EfCore;
+using ppedv.SchrottyCar.Model.Contracts;
 using ppedv.SchrottyCar.Model.DomainModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Windows.Documents;
+using System.Windows.Input;
 
 namespace ppedv.SchrottyCar.UI.WPF.ViewModels
 {
@@ -11,6 +13,8 @@ namespace ppedv.SchrottyCar.UI.WPF.ViewModels
     {
         IRepository _repository;
         private Car selectedCar;
+
+        public ICommand SaveCommand { get; set; }
 
         //todo: kill it!
         public CarsViewModel() : this(new Data.EfCore.EfRepository("Server=(localdb)\\mssqllocaldb;Database=SchrottyDb_Tests;Trusted_Connection=true;"))
@@ -21,6 +25,7 @@ namespace ppedv.SchrottyCar.UI.WPF.ViewModels
             _repository = repository;
 
             CarList = new List<Car>(_repository.Query<Car>().Where(x => !x.IsDeleted));
+            SaveCommand = new SaveCommand(repository);
         }
 
         public List<Car> CarList { get; set; }
@@ -31,8 +36,9 @@ namespace ppedv.SchrottyCar.UI.WPF.ViewModels
             set
             {
                 selectedCar = value;
-                OnPropertyChanged(nameof(SelectedCar)); 
-                OnPropertyChanged(nameof(PS)); 
+                //OnPropertyChanged(nameof(SelectedCar)); 
+                //OnPropertyChanged(nameof(PS)); 
+                OnPropertyChanged(""); 
             }
         }
 
@@ -52,5 +58,28 @@ namespace ppedv.SchrottyCar.UI.WPF.ViewModels
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
+
+    }
+
+    public class SaveCommand : ICommand
+    {
+        private readonly IRepository repo;
+
+        public event EventHandler? CanExecuteChanged;
+
+        public bool CanExecute(object? parameter)
+        {
+            return true;
+        }
+
+        public SaveCommand(IRepository repo)
+        {
+            this.repo = repo;
+        }
+
+        public void Execute(object? parameter)
+        {
+            repo.SaveAll();
+        }
     }
 }

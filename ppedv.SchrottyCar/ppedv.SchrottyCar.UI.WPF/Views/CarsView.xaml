@@ -12,7 +12,7 @@
     </UserControl.DataContext>
     <DockPanel>
         <WrapPanel DockPanel.Dock="Top" Margin="4">
-            <Button>Speichern</Button>
+            <Button Command="{Binding SaveCommand}">Speichern</Button>
             <Button>Neu</Button>
             <Button>Löschen</Button>
         </WrapPanel>
