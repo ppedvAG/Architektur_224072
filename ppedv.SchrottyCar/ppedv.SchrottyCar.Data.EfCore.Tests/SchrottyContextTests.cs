@@ -32,7 +32,7 @@ namespace ppedv.SchrottyCar.Data.EfCore.Tests
             var fix = new Fixture();
 
             fix.Behaviors.Add(new OmitOnRecursionBehavior());
-            fix.Customizations.Add(new PropertyNameOmitter(nameof(Entity.Id)));
+            fix.Customizations.Add(new PropertyNameOmitter(nameof(Entity.Id), nameof(Entity.IsDeleted)));
             var order = fix.Build<Order>().Create();
 
             using (var con = new SchrottyContext(conString))
@@ -63,7 +63,7 @@ namespace ppedv.SchrottyCar.Data.EfCore.Tests
 
 
         [Fact]
-        [Trait("Category","Integration")]
+        [Trait("Category", "Integration")]
         public void Delete_Order_should_delete_OrderItems_but_not_the_car()
         {
             var car = new Car() { Model = "X" };

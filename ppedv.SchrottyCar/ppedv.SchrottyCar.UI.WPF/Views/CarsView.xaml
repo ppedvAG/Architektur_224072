@@ -4,8 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ppedv.SchrottyCar.UI.WPF.Views"
+             xmlns:viewmodels="clr-namespace:ppedv.SchrottyCar.UI.WPF.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <viewmodels:CarsViewModel/>
+    </UserControl.DataContext>
     <DockPanel>
         <WrapPanel DockPanel.Dock="Top" Margin="4">
             <Button>Speichern</Button>
@@ -19,7 +23,8 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <DataGrid/>
+            <DataGrid ItemsSource="{Binding CarList}"
+                      SelectedItem="{Binding SelectedCar}"/>
 
             <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Background="AliceBlue"/>
 
@@ -38,15 +43,18 @@
                 </Grid.RowDefinitions>
 
                 <Label>Manufacturer</Label>
-                <TextBox Grid.Column="1" />
+                <TextBox Grid.Column="1" Text="{Binding SelectedCar.Manufacturer}" />
                 <Label Grid.Row="1">Model</Label>
-                <TextBox Grid.Row="1" Grid.Column="1" />
-                <Label Grid.Row="2">KW</Label>
-                <TextBox Grid.Row="2" Grid.Column="1" />
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedCar.Model}" />
+                <StackPanel Grid.Row="2" Orientation="Horizontal">
+                    <TextBlock>KW</TextBlock>
+                    <TextBlock Text="{Binding PS,StringFormat=' ({0} PS)'}"/>
+                </StackPanel>
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SelectedCar.KW}" />
                 <Label Grid.Row="3">BuildDate</Label>
-                <DatePicker Grid.Row="3" Grid.Column="1" />
+                <DatePicker Grid.Row="3" Grid.Column="1" SelectedDate="{Binding SelectedCar.BuildDate}" />
                 <Label Grid.Row="4">Color</Label>
-                <TextBox Grid.Row="4" Grid.Column="1" />
+                <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding SelectedCar.Color}" />
 
                 <GroupBox Header="Orders" Grid.ColumnSpan="2" Grid.Row="5">
                     <ListBox/>

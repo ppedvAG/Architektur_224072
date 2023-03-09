@@ -8,7 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\" />
+    <ProjectReference Include="..\ppedv.SchrottyCar.Data.EfCore\ppedv.SchrottyCar.Data.EfCore.csproj" />
+    <ProjectReference Include="..\ppedv.SchrottyCar.Model\ppedv.SchrottyCar.Model.csproj" />
+    <ProjectReference Include="..\ppedv.SchrottyCar.Services.CarService\ppedv.SchrottyCar.Services.CarService.csproj" />
   </ItemGroup>
 
 </Project>
