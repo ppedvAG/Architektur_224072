@@ -22,9 +22,9 @@ namespace ppedv.SchrottyCar.Data.EfCore
             _context.Remove(entity);
         }
 
-        public IEnumerable<T> GetAll<T>() where T : Entity
+        public IQueryable<T> Query<T>() where T : Entity
         {
-            return _context.Set<T>().ToList();
+            return _context.Set<T>();
         }
 
         public T? GetById<T>(int id) where T : Entity

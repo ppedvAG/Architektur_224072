@@ -14,7 +14,7 @@ namespace ppedv.SchrottyCar.Services.CarService
 
         public double GetAverageKWOfAllMyCars()
         {
-            return _repository.GetAll<Car>().Average(x => x.KW);
+            return _repository.Query<Car>().Average(x => x.KW);
         }
     }
 }
