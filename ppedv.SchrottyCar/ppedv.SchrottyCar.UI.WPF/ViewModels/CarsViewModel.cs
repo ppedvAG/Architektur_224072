@@ -1,44 +1,59 @@
-﻿using ppedv.SchrottyCar.Data.EfCore;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using ppedv.SchrottyCar.Model.Contracts;
 using ppedv.SchrottyCar.Model.DomainModel;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 
 namespace ppedv.SchrottyCar.UI.WPF.ViewModels
 {
-    internal class CarsViewModel : INotifyPropertyChanged
+    internal class CarsViewModel : ObservableObject
     {
-        IRepository _repository;
+        readonly IRepository _repository;
         private Car selectedCar;
 
+        public ICommand SaveCommandOLD { get; set; }
         public ICommand SaveCommand { get; set; }
-
-        //todo: kill it!
-        public CarsViewModel() : this(new Data.EfCore.EfRepository("Server=(localdb)\\mssqllocaldb;Database=SchrottyDb_Tests;Trusted_Connection=true;"))
-        { }
+        public ICommand NewCommand { get; set; }
 
         public CarsViewModel(IRepository repository)
         {
             _repository = repository;
 
-            CarList = new List<Car>(_repository.Query<Car>().Where(x => !x.IsDeleted));
-            SaveCommand = new SaveCommand(repository);
+            CarList = new ObservableCollection<Car>(_repository.Query<Car>().Where(x => !x.IsDeleted));
+            SaveCommandOLD = new SaveCommand(repository);
+
+            SaveCommand = new RelayCommand(() => repository.SaveAll());
+
+            NewCommand = new RelayCommand(UserWantsToAddNewCar);
         }
 
-        public List<Car> CarList { get; set; }
+        private void UserWantsToAddNewCar()
+        {
+            var newCar = new Car()
+            {
+                BuildDate = DateTime.Now.AddDays(-123),
+                Manufacturer = "NEU"
+            };
+            _repository.Add(newCar);
+            CarList.Add(newCar);
+            SelectedCar = newCar;
+        }
+
+        public ObservableCollection<Car> CarList { get; set; }
 
         public Car SelectedCar
         {
-            get => selectedCar; 
+            get => selectedCar;
             set
             {
                 selectedCar = value;
-                //OnPropertyChanged(nameof(SelectedCar)); 
-                //OnPropertyChanged(nameof(PS)); 
-                OnPropertyChanged(""); 
+                OnPropertyChanged(nameof(SelectedCar));
+                OnPropertyChanged(nameof(PS));
+                //OnPropertyChanged("");
             }
         }
 
@@ -50,36 +65,6 @@ namespace ppedv.SchrottyCar.UI.WPF.ViewModels
                     return "---";
                 return (SelectedCar.KW * 0.73549875).ToString("N");
             }
-        }
-
-        protected void OnPropertyChanged(string propName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
-        }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-    }
-
-    public class SaveCommand : ICommand
-    {
-        private readonly IRepository repo;
-
-        public event EventHandler? CanExecuteChanged;
-
-        public bool CanExecute(object? parameter)
-        {
-            return true;
-        }
-
-        public SaveCommand(IRepository repo)
-        {
-            this.repo = repo;
-        }
-
-        public void Execute(object? parameter)
-        {
-            repo.SaveAll();
         }
     }
 }
