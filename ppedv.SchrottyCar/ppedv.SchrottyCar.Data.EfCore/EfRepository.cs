@@ -3,43 +3,42 @@ using ppedv.SchrottyCar.Model.DomainModel;
 
 namespace ppedv.SchrottyCar.Data.EfCore
 {
-    public class EfRepository : IRepository
+
+    public class EfRepository<T> : IRepository<T> where T : Entity
     {
-        readonly SchrottyContext _context;
+        protected readonly SchrottyContext _context;
 
-        public EfRepository(string conString)
+        public EfRepository(SchrottyContext context)
         {
-            _context = new SchrottyContext(conString);
+            _context = context;
         }
 
-        public void Add<T>(T entity) where T : Entity
-        {
-            _context.Add(entity);
-        }
 
-        public void Delete<T>(T entity) where T : Entity
-        {
-            _context.Remove(entity);
-        }
-
-        public IQueryable<T> Query<T>() where T : Entity
+        public IQueryable<T> Query()
         {
             return _context.Set<T>();
         }
 
-        public T? GetById<T>(int id) where T : Entity
+        public T? GetById(int id)
         {
             return _context.Set<T>().Find(id);
         }
 
-        public void SaveAll()
+        public void Add(T entity)
         {
-            _context.SaveChanges();
+            _context.Add(entity);
         }
 
-        public void Update<T>(T entity) where T : Entity
+        public void Delete(T entity)
+        {
+            _context.Remove(entity);
+        }
+
+        public void Update(T entity)
         {
             _context.Set<T>().Update(entity);
         }
+
     }
+
 }

@@ -8,7 +8,8 @@ var conString = "Server=(localdb)\\mssqllocaldb;Database=SchrottyDb_Tests;Truste
 builder.Services.AddControllers();
 
 // Add services to the container.
-builder.Services.AddScoped<IRepository, EfRepository>(x => new EfRepository(conString));
+builder.Services.AddScoped<IUnitOfWork, EfUnitOfWork>(x => new EfUnitOfWork(conString));
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

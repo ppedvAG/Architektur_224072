@@ -13,11 +13,11 @@ namespace ppedv.SchrottyCar.Web.API.Controllers
     [ApiController]
     public class CarController : ControllerBase
     {
-        private readonly IRepository repo;
+        private readonly IUnitOfWork _uow;
 
-        public CarController(IRepository repo)
+        public CarController(IUnitOfWork uow)
         {
-            this.repo = repo;
+            this._uow = uow;
         }
 
 
@@ -25,39 +25,39 @@ namespace ppedv.SchrottyCar.Web.API.Controllers
         [HttpGet]
         public IEnumerable<CarDTO> Get()
         {
-            return repo.Query<Car>().Select(x => CarMapper.MapToDTO(x));
+            return _uow.CarRepository.Query().Select(x => CarMapper.MapToDTO(x));
         }
 
         // GET api/<CarController>/5
         [HttpGet("{id}")]
         public CarDTO Get(int id)
         {
-            return CarMapper.MapToDTO(repo.GetById<Car>(id));
+            return CarMapper.MapToDTO(_uow.CarRepository.GetById(id));
         }
 
         // POST api/<CarController>
         [HttpPost]
         public void Post([FromBody] CarDTO value)
         {
-            repo.Add(CarMapper.MapToEntity(value));
-            repo.SaveAll();
+            _uow.CarRepository.Add(CarMapper.MapToEntity(value));
+            _uow.SaveAll();
         }
 
         // PUT api/<CarController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] CarDTO value)
         {
-            repo.Update(CarMapper.MapToEntity(value));
-            repo.SaveAll();
+            _uow.CarRepository.Update(CarMapper.MapToEntity(value));
+            _uow.SaveAll();
         }
 
         // DELETE api/<CarController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            var toKill = repo.GetById<Car>(id);
-            repo.Delete(toKill);
-            repo.SaveAll();
+            var toKill = _uow.CarRepository.GetById(id);
+            _uow.CarRepository.Delete(toKill);
+            _uow.SaveAll();
         }
     }
 }

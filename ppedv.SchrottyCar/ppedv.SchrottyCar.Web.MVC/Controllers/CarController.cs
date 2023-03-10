@@ -6,17 +6,17 @@ namespace ppedv.SchrottyCar.Web.MVC.Controllers
 {
     public class CarController : Controller
     {
-        private readonly IRepository repo;
+        private readonly IUnitOfWork _uow;
 
-        public CarController(IRepository repo)
+        public CarController(IUnitOfWork uow)
         {
-            this.repo = repo;
+            _uow = uow;
         }
 
         // GET: CarController
         public ActionResult Index()
         {
-            var cars = repo.Query<Car>().Where(x => !x.IsDeleted).ToList();
+            var cars = _uow.CarRepository.Query().Where(x => !x.IsDeleted).ToList();
 
             return View(cars);
         }
@@ -24,7 +24,7 @@ namespace ppedv.SchrottyCar.Web.MVC.Controllers
         // GET: CarController/Details/5
         public ActionResult Details(int id)
         {
-            return View(repo.GetById<Car>(id));
+            return View(_uow.CarRepository.GetById(id));
         }
 
         // GET: CarController/Create
@@ -40,8 +40,8 @@ namespace ppedv.SchrottyCar.Web.MVC.Controllers
         {
             try
             {
-                repo.Add(car);
-                repo.SaveAll();
+                _uow.CarRepository.Add(car);
+                _uow.SaveAll();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -54,7 +54,7 @@ namespace ppedv.SchrottyCar.Web.MVC.Controllers
         // GET: CarController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View(repo.GetById<Car>(id));
+            return View(_uow.CarRepository.GetById(id));
         }
 
         // POST: CarController/Edit/5
@@ -64,8 +64,8 @@ namespace ppedv.SchrottyCar.Web.MVC.Controllers
         {
             try
             {
-                repo.Update(car);
-                repo.SaveAll();
+                _uow.CarRepository.Update(car);
+                _uow.SaveAll();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -78,7 +78,7 @@ namespace ppedv.SchrottyCar.Web.MVC.Controllers
         // GET: CarController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View(repo.GetById<Car>(id));
+            return View(_uow.CarRepository.GetById(id));
         }
 
         // POST: CarController/Delete/5
@@ -89,8 +89,8 @@ namespace ppedv.SchrottyCar.Web.MVC.Controllers
             try
             {
                 //throw new ExecutionEngineException();
-                repo.Delete(car);
-                repo.SaveAll();
+                _uow.CarRepository.Delete(car);
+                _uow.SaveAll();
 
                 return RedirectToAction(nameof(Index));
             }

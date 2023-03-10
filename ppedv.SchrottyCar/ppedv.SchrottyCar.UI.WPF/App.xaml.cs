@@ -43,7 +43,7 @@ namespace ppedv.SchrottyCar.UI.WPF
 
             var services = new ServiceCollection();
 
-            services.AddScoped<IRepository, EfRepository>(x => new EfRepository(conString));
+            services.AddScoped<IUnitOfWork, EfUnitOfWork>(x => new EfUnitOfWork(conString));
             services.AddScoped<CarsViewModel>();
 
             return services.BuildServiceProvider();

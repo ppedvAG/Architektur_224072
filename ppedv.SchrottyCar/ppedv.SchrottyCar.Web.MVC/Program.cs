@@ -7,7 +7,7 @@ var conString = "Server=(localdb)\\mssqllocaldb;Database=SchrottyDb_Tests;Truste
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<IRepository, EfRepository>(x => new EfRepository(conString));
+builder.Services.AddScoped<IUnitOfWork, EfUnitOfWork>(x => new EfUnitOfWork(conString));
 
 var app = builder.Build();
 

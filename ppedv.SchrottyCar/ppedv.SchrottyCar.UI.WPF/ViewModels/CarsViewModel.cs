@@ -12,21 +12,19 @@ namespace ppedv.SchrottyCar.UI.WPF.ViewModels
 {
     internal class CarsViewModel : ObservableObject
     {
-        readonly IRepository _repository;
+        readonly IUnitOfWork _uow;
         private Car selectedCar;
 
-        public ICommand SaveCommandOLD { get; set; }
         public ICommand SaveCommand { get; set; }
         public ICommand NewCommand { get; set; }
 
-        public CarsViewModel(IRepository repository)
+        public CarsViewModel(IUnitOfWork uow)
         {
-            _repository = repository;
+            _uow = uow;
 
-            CarList = new ObservableCollection<Car>(_repository.Query<Car>().Where(x => !x.IsDeleted));
-            SaveCommandOLD = new SaveCommand(repository);
+            CarList = new ObservableCollection<Car>(_uow.CarRepository.Query().Where(x => !x.IsDeleted));
 
-            SaveCommand = new RelayCommand(() => repository.SaveAll());
+            SaveCommand = new RelayCommand(() => _uow.SaveAll());
 
             NewCommand = new RelayCommand(UserWantsToAddNewCar);
         }
@@ -38,7 +36,7 @@ namespace ppedv.SchrottyCar.UI.WPF.ViewModels
                 BuildDate = DateTime.Now.AddDays(-123),
                 Manufacturer = "NEU"
             };
-            _repository.Add(newCar);
+            _uow.CarRepository.Add(newCar);
             CarList.Add(newCar);
             SelectedCar = newCar;
         }
