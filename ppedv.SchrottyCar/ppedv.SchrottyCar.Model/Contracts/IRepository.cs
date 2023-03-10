@@ -1,16 +1,31 @@
 ﻿using ppedv.SchrottyCar.Model.DomainModel;
+using System.Data.Common;
 
 namespace ppedv.SchrottyCar.Model.Contracts
 {
-    public interface IRepository
+
+    public interface IQueryRepository<out T> where T : Entity
     {
-        T? GetById<T>(int id) where T : Entity;
-        IQueryable<T> Query<T>() where T : Entity;
+        T? GetById(int id);
+        IQueryable<T> Query();
+    }
 
-        void Add<T>(T entity) where T : Entity;
-        void Delete<T>(T entity) where T : Entity;
-        void Update<T>(T entity) where T : Entity;
+    public interface ICarQueryRepository : IQueryRepository<Car>
+    {
+        IEnumerable<Car> GetSuperCarsByStoredProcedure();
+    }
 
-        void SaveAll();
+
+    public interface ICommandRepository<T> : IQueryRepository<T> where T : Entity
+    {
+        void Add(T entity);
+        void Delete(T entity);
+        void Update(T entity);
+    }
+
+    public interface ICarCommandRepository : ICarQueryRepository, ICommandRepository<Car>
+    {
+        void KillAllCars();
+
     }
 }

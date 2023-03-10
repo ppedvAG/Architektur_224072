@@ -23,13 +23,13 @@ string conString = "Server=(localdb)\\mssqllocaldb;Database=SchrottyDb_Tests;Tru
 
 //DI per AutoFac
 var builder = new ContainerBuilder();
-builder.RegisterType<EfRepository>().AsImplementedInterfaces().WithParameter("conString", conString);
+builder.RegisterType<EfUnitOfWork>().AsImplementedInterfaces().WithParameter("conString", conString);
 var container = builder.Build();
 
-IRepository repo = container.Resolve<IRepository>();
-CarManager cm = new CarManager(container.Resolve<IRepository>());
+IUnitOfWork uow = container.Resolve<IUnitOfWork>();
+CarManager cm = new CarManager(container.Resolve<IUnitOfWork>());
 
-foreach (var car in repo.Query<Car>())
+foreach (var car in uow.CarRepository.Query())
 {
     Console.WriteLine($"{car.Id} {car.Manufacturer} {car.Model} {car.KW} {car.Color}");
 }

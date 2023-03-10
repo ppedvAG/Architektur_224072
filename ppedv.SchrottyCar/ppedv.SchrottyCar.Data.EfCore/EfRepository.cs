@@ -1,45 +1,77 @@
-﻿using ppedv.SchrottyCar.Model.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using ppedv.SchrottyCar.Model.Contracts;
 using ppedv.SchrottyCar.Model.DomainModel;
 
 namespace ppedv.SchrottyCar.Data.EfCore
 {
-    public class EfRepository : IRepository
+
+    public class EfQueryRepository<T> : IQueryRepository<T> where T : Entity
     {
-        readonly SchrottyContext _context;
+        protected readonly SchrottyContext _context;
 
-        public EfRepository(string conString)
+        public EfQueryRepository(SchrottyContext context)
         {
-            _context = new SchrottyContext(conString);
+            _context = context;
         }
 
-        public void Add<T>(T entity) where T : Entity
-        {
-            _context.Add(entity);
-        }
 
-        public void Delete<T>(T entity) where T : Entity
-        {
-            _context.Remove(entity);
-        }
-
-        public IQueryable<T> Query<T>() where T : Entity
+        public IQueryable<T> Query()
         {
             return _context.Set<T>();
         }
 
-        public T? GetById<T>(int id) where T : Entity
+        public T? GetById(int id)
         {
             return _context.Set<T>().Find(id);
         }
 
-        public void SaveAll()
+    }
+
+    public class EfCarQueryRepository : EfQueryRepository<Car>, ICarQueryRepository
+    {
+        public EfCarQueryRepository(SchrottyContext context) : base(context)
+        { }
+
+        public IEnumerable<Car> GetSuperCarsByStoredProcedure()
         {
-            _context.SaveChanges();
+            return _context.Database.SqlQueryRaw<Car>("exec SPSPSPSPS");
+
+        }
+    }
+
+    public class EfCommandRepository<T> : EfQueryRepository<T>, ICommandRepository<T> where T : Entity
+    {
+        public EfCommandRepository(SchrottyContext context) : base(context)
+        { }
+
+        public void Add(T entity)
+        {
+            _context.Add(entity);
         }
 
-        public void Update<T>(T entity) where T : Entity
+        public void Delete(T entity)
+        {
+            _context.Remove(entity);
+        }
+
+        public void Update(T entity)
         {
             _context.Set<T>().Update(entity);
         }
     }
+
+    public class EfCarCommandRepository : EfCommandRepository<Car>, EfCarQueryRepository
+    {
+        public EfCarCommandRepository(SchrottyContext context) : base(context)
+        {
+        }
+
+   
+
+        public void KillAllCars()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
 }

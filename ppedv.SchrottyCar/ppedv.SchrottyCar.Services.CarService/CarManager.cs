@@ -5,21 +5,22 @@ namespace ppedv.SchrottyCar.Services.CarService
 {
     public class CarManager
     {
-        private readonly IRepository _repository;
+        
+        private readonly IUnitOfWork unitOfWork;
 
-        public CarManager(IRepository repository)
+        public CarManager(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            this.unitOfWork = unitOfWork;
         }
 
         public double GetAverageKWOfAllMyCars()
         {
-            return _repository.Query<Car>().Average(x => x.KW);
+            return unitOfWork.CarRepository.Query().Average(x => x.KW);
         }
 
         public string? GetFastestCarColor()
         {
-            return _repository.Query<Car>()
+            return unitOfWork.CarRepository.Query()
                               .GroupBy(c => c.Color)
                               .OrderByDescending(x => x.Average(y => y.KW))
                               .FirstOrDefault()?.Key;
