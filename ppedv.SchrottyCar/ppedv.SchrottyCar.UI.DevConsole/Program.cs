@@ -23,14 +23,21 @@ string conString = "Server=(localdb)\\mssqllocaldb;Database=SchrottyDb_Tests;Tru
 
 //DI per AutoFac
 var builder = new ContainerBuilder();
-builder.RegisterType<EfUnitOfWork>().AsImplementedInterfaces().WithParameter("conString", conString);
+builder.RegisterType<SchrottyContext>().As<IUnitOfWork>().AsSelf().WithParameter("conString", conString).SingleInstance();
+builder.RegisterGeneric(typeof(EfQueryRepository<>)).As(typeof(IQueryRepository<>)).WithParameter((pi, ctx) => pi.ParameterType == typeof(SchrottyContext) && pi.Name == "context",
+                          (pi, ctx) => ctx.Resolve<SchrottyContext>());
+//builder.RegisterGeneric(typeof(EfQueryRepository<>)).As(typeof(IQueryRepository<>)).WithParameter("context",)
+//builder.RegisterType(typeof(EfCarQueryRepository)).As(typeof(ICarQueryRepository));
+//builder.RegisterGeneric(typeof(EfCommandRepository<>)).As(typeof(ICommandRepository<>));
+//builder.RegisterType(typeof(EfCarCommandRepository)).As(typeof(ICarCommandRepository));
 var container = builder.Build();
 
-IUnitOfWork uow = container.Resolve<IUnitOfWork>();
-CarManager cm = new CarManager(container.Resolve<IUnitOfWork>());
+//IUnitOfWork uow = container.Resolve<IUnitOfWork>();
+//CarManager cm = new CarManager(container.Resolve<IUnitOfWork>());
 
-foreach (var car in uow.CarRepository.Query())
+//foreach (var car in uow.CarRepository.Query())
+foreach (var car in container.Resolve<IQueryRepository<Car>>().Query())
 {
     Console.WriteLine($"{car.Id} {car.Manufacturer} {car.Model} {car.KW} {car.Color}");
 }
-Console.WriteLine($"⌀ {cm.GetAverageKWOfAllMyCars():N}");
+//Console.WriteLine($"⌀ {cm.GetAverageKWOfAllMyCars():N}");

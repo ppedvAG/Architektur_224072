@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ppedv.SchrottyCar.Model.Contracts;
 using ppedv.SchrottyCar.Model.DomainModel;
 
 namespace ppedv.SchrottyCar.Data.EfCore
 {
-    public class SchrottyContext : DbContext
+    public class SchrottyContext : DbContext,IUnitOfWork
     {
         private readonly string conString;
 
@@ -30,6 +31,11 @@ namespace ppedv.SchrottyCar.Data.EfCore
 
             modelBuilder.Entity<Order>().HasMany(x=>x.OrderItems).WithOne(x=>x.Order).OnDelete(DeleteBehavior.Cascade);
             //modelBuilder.Entity<Car>().Ignore(x => x.KW);
+        }
+
+        public void SaveAll()
+        {
+            SaveChanges();
         }
     }
 }

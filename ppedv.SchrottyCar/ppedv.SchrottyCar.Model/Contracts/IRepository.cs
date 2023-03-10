@@ -6,6 +6,8 @@ namespace ppedv.SchrottyCar.Model.Contracts
 
     public interface IQueryRepository<out T> where T : Entity
     {
+        IUnitOfWork UnitOfWork { get; }
+
         T? GetById(int id);
         IQueryable<T> Query();
     }
@@ -16,14 +18,16 @@ namespace ppedv.SchrottyCar.Model.Contracts
     }
 
 
-    public interface ICommandRepository<T> : IQueryRepository<T> where T : Entity
+    public interface ICommandRepository<in T> where T : Entity
     {
+        IUnitOfWork UnitOfWork { get; }
+
         void Add(T entity);
         void Delete(T entity);
         void Update(T entity);
     }
 
-    public interface ICarCommandRepository : ICarQueryRepository, ICommandRepository<Car>
+    public interface ICarCommandRepository : ICommandRepository<Car>
     {
         void KillAllCars();
 

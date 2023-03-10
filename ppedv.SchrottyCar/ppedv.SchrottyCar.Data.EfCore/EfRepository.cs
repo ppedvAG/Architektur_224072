@@ -9,11 +9,12 @@ namespace ppedv.SchrottyCar.Data.EfCore
     {
         protected readonly SchrottyContext _context;
 
+        public IUnitOfWork UnitOfWork => _context;
+
         public EfQueryRepository(SchrottyContext context)
         {
             _context = context;
         }
-
 
         public IQueryable<T> Query()
         {
@@ -39,10 +40,16 @@ namespace ppedv.SchrottyCar.Data.EfCore
         }
     }
 
-    public class EfCommandRepository<T> : EfQueryRepository<T>, ICommandRepository<T> where T : Entity
+    public class EfCommandRepository<T> : ICommandRepository<T> where T : Entity
     {
-        public EfCommandRepository(SchrottyContext context) : base(context)
-        { }
+        protected readonly SchrottyContext _context;
+
+        public EfCommandRepository(SchrottyContext context)
+        {
+            _context = context;
+        }
+
+        public IUnitOfWork UnitOfWork => _context;
 
         public void Add(T entity)
         {
@@ -60,13 +67,11 @@ namespace ppedv.SchrottyCar.Data.EfCore
         }
     }
 
-    public class EfCarCommandRepository : EfCommandRepository<Car>, EfCarQueryRepository
+    public class EfCarCommandRepository : EfCommandRepository<Car>, ICarCommandRepository
     {
         public EfCarCommandRepository(SchrottyContext context) : base(context)
         {
         }
-
-   
 
         public void KillAllCars()
         {
