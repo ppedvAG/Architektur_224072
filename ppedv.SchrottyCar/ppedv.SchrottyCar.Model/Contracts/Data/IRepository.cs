@@ -1,7 +1,7 @@
 ﻿using ppedv.SchrottyCar.Model.DomainModel;
 using System.Data.Common;
 
-namespace ppedv.SchrottyCar.Model.Contracts
+namespace ppedv.SchrottyCar.Model.Contracts.Data
 {
 
     public interface IRepository<T> where T : Entity

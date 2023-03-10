@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ppedv.SchrottyCar.Model.Contracts;
+using ppedv.SchrottyCar.Model.Contracts.Data;
 using ppedv.SchrottyCar.Model.DomainModel;
 using ppedv.SchrottyCar.Services.CarService;
 using ppedv.SchrottyCar.Web.API.Model;

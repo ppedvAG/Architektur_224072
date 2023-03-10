@@ -1,5 +1,5 @@
 using ppedv.SchrottyCar.Data.EfCore;
-using ppedv.SchrottyCar.Model.Contracts;
+using ppedv.SchrottyCar.Model.Contracts.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

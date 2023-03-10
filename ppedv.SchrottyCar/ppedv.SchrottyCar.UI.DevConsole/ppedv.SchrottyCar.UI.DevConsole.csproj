@@ -15,6 +15,8 @@
     <ProjectReference Include="..\ppedv.SchrottyCar.Data.EfCore\ppedv.SchrottyCar.Data.EfCore.csproj" />
     <ProjectReference Include="..\ppedv.SchrottyCar.Model\ppedv.SchrottyCar.Model.csproj" />
     <ProjectReference Include="..\ppedv.SchrottyCar.Services.CarService\ppedv.SchrottyCar.Services.CarService.csproj" />
+    <ProjectReference Include="..\ppedv.SchrottyCar.Services.CustomerServices\ppedv.SchrottyCar.Services.CustomerServices.csproj" />
+    <ProjectReference Include="..\ppedv.SchrottyCar.Services.OrderService\ppedv.SchrottyCar.Services.OrderService.csproj" />
   </ItemGroup>
 
 </Project>

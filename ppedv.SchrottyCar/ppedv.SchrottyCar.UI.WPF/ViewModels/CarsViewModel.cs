@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using ppedv.SchrottyCar.Model.Contracts;
+using ppedv.SchrottyCar.Model.Contracts.Data;
 using ppedv.SchrottyCar.Model.DomainModel;
 using System;
 using System.Collections.Generic;
@@ -25,7 +25,6 @@ namespace ppedv.SchrottyCar.UI.WPF.ViewModels
             CarList = new ObservableCollection<Car>(_uow.CarRepository.Query().Where(x => !x.IsDeleted));
 
             SaveCommand = new RelayCommand(() => _uow.SaveAll());
-
             NewCommand = new RelayCommand(UserWantsToAddNewCar);
         }
 

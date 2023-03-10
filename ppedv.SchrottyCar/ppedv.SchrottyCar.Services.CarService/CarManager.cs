@@ -1,11 +1,12 @@
-﻿using ppedv.SchrottyCar.Model.Contracts;
+﻿using ppedv.SchrottyCar.Model.Contracts.Data;
+using ppedv.SchrottyCar.Model.Contracts.Service;
 using ppedv.SchrottyCar.Model.DomainModel;
 
 namespace ppedv.SchrottyCar.Services.CarService
 {
-    public class CarManager
+    public class CarManager : ICarService
     {
-        
+
         private readonly IUnitOfWork unitOfWork;
 
         public CarManager(IUnitOfWork unitOfWork)

@@ -1,4 +1,4 @@
-﻿using ppedv.SchrottyCar.Model.Contracts;
+﻿using ppedv.SchrottyCar.Model.Contracts.Data;
 using ppedv.SchrottyCar.Model.DomainModel;
 
 namespace ppedv.SchrottyCar.Data.EfCore

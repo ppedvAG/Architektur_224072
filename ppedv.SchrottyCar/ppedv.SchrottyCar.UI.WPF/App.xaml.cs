@@ -1,13 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ppedv.SchrottyCar.Data.EfCore;
-using ppedv.SchrottyCar.Model.Contracts;
+using ppedv.SchrottyCar.Model.Contracts.Data;
 using ppedv.SchrottyCar.UI.WPF.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace ppedv.SchrottyCar.UI.WPF

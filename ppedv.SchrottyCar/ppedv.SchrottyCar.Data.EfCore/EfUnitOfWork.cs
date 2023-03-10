@@ -1,14 +1,17 @@
-﻿using ppedv.SchrottyCar.Model.Contracts;
+﻿using ppedv.SchrottyCar.Model.Contracts.Data;
 using ppedv.SchrottyCar.Model.DomainModel;
 
 namespace ppedv.SchrottyCar.Data.EfCore
 {
     public class EfUnitOfWork : IUnitOfWork
     {
-        readonly SchrottyContext _context;
+        SchrottyContext _context;
+        private readonly string _conString;
+
         public EfUnitOfWork(string conString)
         {
             _context = new SchrottyContext(conString);
+            _conString = conString;
         }
 
         public ICarRepository CarRepository => new EfCarRepository(_context);
@@ -24,6 +27,7 @@ namespace ppedv.SchrottyCar.Data.EfCore
         public void SaveAll()
         {
             _context.SaveChanges();
+            _context = new SchrottyContext(_conString); //reset LazyLoading cache
         }
     }
 }
